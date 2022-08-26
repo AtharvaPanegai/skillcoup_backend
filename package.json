@@ -1,0 +1,23 @@
+{
+  "name": "skillcoup-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start":"node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skillcoup/skillcoup_backend.git"
+  },
+  "author": "viraj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Skillcoup/skillcoup_backend/issues"
+  },
+  "homepage": "https://github.com/Skillcoup/skillcoup_backend#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
