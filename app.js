@@ -6,14 +6,16 @@ const fileUpload = require("express-fileupload");
 
 // middlewares
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 // cookie middlewares
 app.use(cookieParser());
-app.use(fileUpload({
-    useTempFiles:true,
-    tempFileDir:"/tmp/",
-}))
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
 
 // morgan middleware
 app.use(morgan("tiny"));
@@ -21,12 +23,8 @@ app.use(morgan("tiny"));
 // import all routes here
 const home = require("./routes/home");
 
-
 // router middleware
-app.use("/api/v1",home);
-
-
+app.use("/api/v1", home);
 
 // exports
 module.exports = app;
-
