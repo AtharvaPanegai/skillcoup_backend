@@ -1,6 +1,17 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const languageSchema = new Schema({
+  lang: {
+    type: String,
+    required: [true, "Please enter a language"],
+  },
+  level: {
+    type: String,
+    required: [true, "Please select a level"],
+  },
+});
+
 const FreelancerSchema = new Schema(
   {
     firstName: {
@@ -13,24 +24,19 @@ const FreelancerSchema = new Schema(
     },
     profile: {
       type: String,
-      required: [true, "Please provide your profile picture"],
+      // required: [true, "Please provide your profile picture"],
     },
     description: {
       type: String,
       required: [true, "Please tell us about yourself"],
     },
     language: {
-      type: [
-        {
-          lang: String,
-          required: [true, "Please mention any languages you know"],
-        },
-        { level: String, required: [true, "Please select your level"] },
-      ],
+      type: [languageSchema],
+      required: [true, "Please add some languages"],
     },
   },
   { timestamps: true }
 );
 
-const Freelancer1 = mongoose.model("Freelancer", FreelancerSchema);
+const Freelancer1 = mongoose.model("Freelancer1", FreelancerSchema);
 module.exports = Freelancer1;

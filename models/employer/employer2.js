@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 const EmployerSchema = new Schema({
   about: {
     type: String,
@@ -24,15 +25,17 @@ const EmployerSchema = new Schema({
   organisationType: {
     type: [
       {
-        type: String,
-        required: [true, "Please provide your organisation type"],
-      },
-      {
-        employees: Number,
-        required: [
-          true,
-          "Please provide the number of employees in your organisation",
-        ],
+        type: {
+          type: String,
+          required: [true, "Please provide your organisation type"],
+        },
+        employees: {
+          type: String,
+          required: [
+            true,
+            "Please provide the number of employees in your organisation",
+          ],
+        },
       },
     ],
   },

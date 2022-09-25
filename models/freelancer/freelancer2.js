@@ -1,15 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
+const skillsSchema = new Schema({
+  language: {
+    type: String,
+  },
+  level: {
+    type: String,
+  },
+});
+
 const FreelancerSchema = new Schema({
+  // _id: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Freelance1",
+  // },
   skills: {
-    type: [
-      {
-        language: String,
-      },
-      {
-        level: String,
-      },
-    ],
+    type: [skillsSchema],
   },
   education: {
     type: [

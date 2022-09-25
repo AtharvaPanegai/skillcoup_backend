@@ -22,9 +22,13 @@ app.use(morgan("tiny"));
 
 // import all routes here
 const home = require("./routes/home");
+const employer = require("./routes/employer");
+const freelancer = require("./routes/freelancer");
 
 // router middleware
 app.use("/api/v1", home);
+app.use("/api/freelancer", freelancer);
+app.use("/api/employer", employer);
 
 // exports
 module.exports = app;

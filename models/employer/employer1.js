@@ -16,7 +16,7 @@ const EmployerSchema = new Schema(
     },
     email: { type: String, required: [true, "Please enter your email"] },
     phone: { type: String, required: [true, "Please enter your phone number"] },
-    logo: String,
+    // logo: String,
   },
   { timestamps: true }
 );
