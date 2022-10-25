@@ -1,7 +1,7 @@
 /** @format */
 
 const User = require("../models/user");
-const BigPromise = require("../middlewares/bigPromise");
+const BigPromise = require("../middleware/BigPromise")
 const CustomError = require("../utils/customError");
 const cookieToken = require("../utils/cookieToken");
 const cloudinary = require("cloudinary");
@@ -15,9 +15,9 @@ exports.signup = BigPromise(async (req, res, next) => {
     return next(new CustomError("Photo is required for signup", 400));
   }
 
-  const { name, email, password } = req.body;
+  const { firstName,lastName,username,phoneNumber, emailId, password } = req.body;
 
-  if (!email || !name || !password) {
+  if (!emailId || !firstName ||!lastName || !username || !phoneNumber || !password) {
     return next(new CustomError("Fields are Missing", 400));
   }
 
@@ -29,8 +29,11 @@ exports.signup = BigPromise(async (req, res, next) => {
   });
 
   const user = await User.create({
-    name,
-    email,
+    firstName,
+    lastName,
+    emailId,
+    username,
+    phoneNumber,
     password,
     photo: {
       id: photoUploadResult.public_id,
@@ -41,7 +44,7 @@ exports.signup = BigPromise(async (req, res, next) => {
   cookieToken(user, res);
 });
 
-exports.login = BigPromise(async (req, res, next) => {
+exports.signin = BigPromise(async (req, res, next) => {
   const { email, password } = req.body;
 
   // check for presence of Email and Password of given by the user

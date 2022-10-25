@@ -22,12 +22,18 @@ const userSchema = new Schema({
     required: true,
   },
   phoneNumber: {
-    type: String.fromCharCode,
+    type: String,
     required: true,
   },
   emailId: {
     type: String,
     required: true,
+  },
+  password: {
+    type: String,
+    required: [true, "Please provide an password"], // first property is required and second is during the error
+    minlength: [2, "Password should be atleast 2 Characters"],
+    select: false,
   },
   skills: [
     {
@@ -41,7 +47,7 @@ const userSchema = new Schema({
   },
   introduction: {
     type: String,
-    required: true,
+    // required: true,
   },
   rating: {
     type: Number,
@@ -58,11 +64,9 @@ const userSchema = new Schema({
   photo: {
     id: {
       type: String,
-      required: true,
     },
     secure_url: {
       type: String,
-      required: true,
     },
   },
   forgotPasswordToken: String,
@@ -75,7 +79,7 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next;
   }
-  const salt = bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
