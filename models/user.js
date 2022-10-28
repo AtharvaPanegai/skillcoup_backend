@@ -55,6 +55,7 @@ const userSchema = new Schema({
   isEmailVerified: Boolean,
   userType: {
     type: String,
+    required:true
     // freelancer,client,admin,manager
   },
   createdAt: {
