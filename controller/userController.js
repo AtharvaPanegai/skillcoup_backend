@@ -15,7 +15,7 @@ exports.signup = BigPromise(async (req, res, next) => {
     return next(new CustomError("Photo is required for signup", 400));
   }
 
-  const { firstName,lastName,username,phoneNumber, emailId, password } = req.body;
+  const { firstName,lastName,username,phoneNumber, emailId, password,userType } = req.body;
 
   if (!emailId || !firstName ||!lastName || !username || !phoneNumber || !password) {
     return next(new CustomError("Fields are Missing", 400));
@@ -35,6 +35,7 @@ exports.signup = BigPromise(async (req, res, next) => {
     username,
     phoneNumber,
     password,
+    userType,
     photo: {
       id: photoUploadResult.public_id,
       secure_url: photoUploadResult.secure_url,
@@ -228,6 +229,8 @@ exports.updateUserDetails = BigPromise(async (req, res, next) => {
   });
 });
 
+
+// admin Controller
 exports.adminAllUsers = BigPromise(async (req, res, next) => {
   // find everyone
   const users = await User.find({});
@@ -239,7 +242,8 @@ exports.adminAllUsers = BigPromise(async (req, res, next) => {
 });
 
 exports.admingetSingleUser = BigPromise(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const {username} = req.body;
+  const user = await User.find({username:username});
 
   if (!user) {
     next(new CustomError("No user Found", 401));
@@ -278,7 +282,8 @@ exports.adminUpdateOneUserDetail = BigPromise(async (req, res, next) => {
 });
 
 exports.adminDeleteSingleUserById = BigPromise(async (req, res, next) => {
-  const userImage = await User.findById(req.params.id);
+  const username = req.body
+  const userImage = await User.find({username:username});
   const imageToBeDeleted = await userImage.photo.id;
 
   const photoRes = await cloudinary.v2.uploader.destroy(imageToBeDeleted);
@@ -292,12 +297,14 @@ exports.adminDeleteSingleUserById = BigPromise(async (req, res, next) => {
   });
 });
 
-exports.managerAllUsers = BigPromise(async (req, res, next) => {
-  const users = await User.find({ role: "user" });
+exports.adminGetUsersByRole = BigPromise(async (req, res, next) => {
+  const {userType} = req.body;
+  const users = await User.find({ userType: userType });
 
   res.status(200).json({
     success: true,
-    users,
+    userType,
+    users
   });
 });
 
