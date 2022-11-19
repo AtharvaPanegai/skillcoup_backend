@@ -9,11 +9,11 @@ const cloudinary = require("cloudinary");
 const crypto = require("crypto");
 
 exports.signup = BigPromise(async (req, res, next) => {
-  let photoUploadResult;
+  // let photoUploadResult;
 
-  if (!req.files) {
-    return next(new CustomError("Photo is required for signup", 400));
-  }
+  // if (!req.files) {
+  //   return next(new CustomError("Photo is required for signup", 400));
+  // }
 
   const { firstName,lastName,username,phoneNumber, emailId, password,userType } = req.body;
 
@@ -21,12 +21,12 @@ exports.signup = BigPromise(async (req, res, next) => {
     return next(new CustomError("Fields are Missing", 400));
   }
 
-  let file = req.files.photo;
-  photoUploadResult = await cloudinary.v2.uploader.upload(file.tempFilePath, {
-    folder: "users",
-    width: 150,
-    crop: "scale",
-  });
+  // let file = req.files.photo;
+  // photoUploadResult = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+  //   folder: "users",
+  //   width: 150,
+  //   crop: "scale",
+  // });
 
   const user = await User.create({
     firstName,
@@ -36,10 +36,10 @@ exports.signup = BigPromise(async (req, res, next) => {
     phoneNumber,
     password,
     userType,
-    photo: {
-      id: photoUploadResult.public_id,
-      secure_url: photoUploadResult.secure_url,
-    },
+    // photo: {
+    //   id: photoUploadResult.public_id,
+    //   secure_url: photoUploadResult.secure_url,
+     },
   });
   // these functions will be used again and again in resetPassword and more places
   cookieToken(user, res);
@@ -82,6 +82,7 @@ exports.logout = BigPromise(async (req, res, next) => {
   });
 });
 
+// pending
 exports.forgotPassword = BigPromise(async (req, res, next) => {
   // collect email
   const { email } = req.body;
@@ -125,7 +126,7 @@ exports.forgotPassword = BigPromise(async (req, res, next) => {
     return next(new CustomError(error.message, 500));
   }
 });
-
+// pending
 exports.passwordReset = BigPromise(async (req, res, next) => {
   const token = req.params.token;
   const encyrptedToken = crypto
@@ -153,7 +154,7 @@ exports.passwordReset = BigPromise(async (req, res, next) => {
 
   cookieToken(user, res);
 });
-
+// pending
 exports.getLoggedInUserDetails = BigPromise(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
@@ -162,7 +163,7 @@ exports.getLoggedInUserDetails = BigPromise(async (req, res, next) => {
     user,
   });
 });
-
+// pending
 exports.changePassword = BigPromise(async (req, res, next) => {
   const userId = req.user.id;
 
@@ -179,7 +180,7 @@ exports.changePassword = BigPromise(async (req, res, next) => {
 
   cookieToken(user, res);
 });
-
+// pending
 exports.updateUserDetails = BigPromise(async (req, res, next) => {
   // check if there's email and name in the body
   if (!req.body.name || !req.body.email) {
@@ -255,6 +256,7 @@ exports.admingetSingleUser = BigPromise(async (req, res, next) => {
   });
 });
 
+// pending
 exports.adminUpdateOneUserDetail = BigPromise(async (req, res, next) => {
   // check if there's email and name in the body
   if (!req.body.name || !req.body.email) {
@@ -281,6 +283,7 @@ exports.adminUpdateOneUserDetail = BigPromise(async (req, res, next) => {
   });
 });
 
+// pending
 exports.adminDeleteSingleUserById = BigPromise(async (req, res, next) => {
   const username = req.body
   const userImage = await User.find({username:username});

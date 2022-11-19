@@ -15,11 +15,11 @@ const userSchema = new Schema({
   },
   firstName: {
     type: String,
-    required: true,
+    // required: true,
   },
   lastName: {
     type: String,
-    required: true,
+    // required: true,
   },
   phoneNumber: {
     type: String,
@@ -28,10 +28,11 @@ const userSchema = new Schema({
   emailId: {
     type: String,
     required: true,
+    unique:true
   },
   password: {
     type: String,
-    required: [true, "Please provide an password"], // first property is required and second is during the error
+    required: [true, "Please provide a password"], // first property is required and second is during the error
     minlength: [2, "Password should be atleast 2 Characters"],
     select: false,
   },
@@ -55,7 +56,7 @@ const userSchema = new Schema({
   isEmailVerified: Boolean,
   userType: {
     type: String,
-    required:true
+    required: true
     // freelancer,client,admin,manager
   },
   createdAt: {
@@ -70,6 +71,12 @@ const userSchema = new Schema({
       type: String,
     },
   },
+  jobPosted: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "JobPost",
+    }
+  ],
   forgotPasswordToken: String,
   forgotPasswordExpiry: Date,
 });
