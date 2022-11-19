@@ -14,12 +14,9 @@ const jobPostSchema = new Schema({
         type:String,
         required:true,
     },
-    jobMinCost:{
+    jobBudget:{
         type:Number,
-    },
-    jobMaxCost:{
-        type:Number,
-
+        required:true,
     },
     jobTags:[
         {

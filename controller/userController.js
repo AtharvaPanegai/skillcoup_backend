@@ -9,11 +9,11 @@ const cloudinary = require("cloudinary");
 const crypto = require("crypto");
 
 exports.signup = BigPromise(async (req, res, next) => {
-  let photoUploadResult;
+  // let photoUploadResult;
 
-  if (!req.files) {
-    return next(new CustomError("Photo is required for signup", 400));
-  }
+  // if (!req.files) {
+  //   return next(new CustomError("Photo is required for signup", 400));
+  // }
 
   const { firstName,lastName,username,phoneNumber, emailId, password,userType } = req.body;
 
@@ -21,12 +21,12 @@ exports.signup = BigPromise(async (req, res, next) => {
     return next(new CustomError("Fields are Missing", 400));
   }
 
-  let file = req.files.photo;
-  photoUploadResult = await cloudinary.v2.uploader.upload(file.tempFilePath, {
-    folder: "users",
-    width: 150,
-    crop: "scale",
-  });
+  // let file = req.files.photo;
+  // photoUploadResult = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+  //   folder: "users",
+  //   width: 150,
+  //   crop: "scale",
+  // });
 
   const user = await User.create({
     firstName,
@@ -36,10 +36,10 @@ exports.signup = BigPromise(async (req, res, next) => {
     phoneNumber,
     password,
     userType,
-    photo: {
-      id: photoUploadResult.public_id,
-      secure_url: photoUploadResult.secure_url,
-    },
+    // photo: {
+    //   id: photoUploadResult.public_id,
+    //   secure_url: photoUploadResult.secure_url,
+     },
   });
   // these functions will be used again and again in resetPassword and more places
   cookieToken(user, res);
