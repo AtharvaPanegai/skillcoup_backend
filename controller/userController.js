@@ -28,6 +28,8 @@ exports.signup = BigPromise(async (req, res, next) => {
   //   crop: "scale",
   // });
 
+  
+
   const user = await User.create({
     firstName,
     lastName,
@@ -35,12 +37,8 @@ exports.signup = BigPromise(async (req, res, next) => {
     username,
     phoneNumber,
     password,
-    userType,
-    // photo: {
-    //   id: photoUploadResult.public_id,
-    //   secure_url: photoUploadResult.secure_url,
-     },
-  });
+    userType
+  })
   // these functions will be used again and again in resetPassword and more places
   cookieToken(user, res);
 });
