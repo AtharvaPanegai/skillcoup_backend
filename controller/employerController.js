@@ -5,28 +5,27 @@ const cloudinary = require("cloudinary");
 
 
 exports.postJob = BigPromise(async (req, res, next) => {
-    const Client = req.params.id;
+ 
+    const { jobTitle, jobCategory, jobBudget, jobTags, jobDescription, jobFileUrl } = req.body;
 
-    const { jobTitle, jobType, jobCategory, jobBudget, jobTags, jobDescription, jobFileUrl } = req.body;
-
-    if (!jobTitle || !jobType || !jobCategory || !jobBudget || !jobTags || !jobDescription || !jobFileUrl) {
+    if (!jobTitle || !jobCategory || !jobBudget || !jobTags || !jobDescription || !jobFileUrl) {
         return next(new CustomError("Fields are missing", 401));
     }
     const jobPosted = await JobPost.create({
         jobTitle,
-        jobType,
+        jobStatus:"posted",
         jobCategory,
         jobBudget,
         jobTags,
         jobDescription,
         jobFileUrl,
-        Client
+        Client:req.user._id
     })
 
     res.status(200).json({
         success:true,
         job : jobPosted
     })
-
 });
+
 

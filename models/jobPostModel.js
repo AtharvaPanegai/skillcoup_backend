@@ -6,10 +6,11 @@ const jobPostSchema = new Schema({
         type:String,
         required:true,
     },
-    jobType:{
+    jobStatus:{
         type:String,
         required:true,
     }, 
+    // posted,assigned,started,inprogress,completed
     jobCategory:{
         type:String,
         required:true,
@@ -32,7 +33,8 @@ const jobPostSchema = new Schema({
     },
     Client:{
         type:Schema.Types.ObjectId,
-        ref:"User"
+        ref:"User",
+        required:true
     }
 });
 
