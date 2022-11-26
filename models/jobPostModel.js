@@ -40,7 +40,13 @@ const jobPostSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:"User",
         required:false,
-    }
+    },
+    jobProposals:[
+        {
+            type:Schema.Types.ObjectId,
+            ref:"JobBid",
+        }
+    ]
 });
 
 module.exports = mongoose.model("JobPost",jobPostSchema);

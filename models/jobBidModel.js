@@ -3,7 +3,7 @@ const {Schema} = mongoose;
 
 const jobBidSchema = new Schema({
     freelancer : {
-        Type:Schema.Types.ObjectId,
+        type:Schema.Types.ObjectId,
         required:true,
         ref:"User"
     },
@@ -14,6 +14,11 @@ const jobBidSchema = new Schema({
     proposalQutation : {
         type:Number,
         required:true,
+    },
+    jobId : {
+        type:Schema.Types.ObjectId,
+        ref:"JobPost",
+        required:true
     }    
 });
 
