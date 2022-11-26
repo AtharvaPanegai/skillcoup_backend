@@ -6,10 +6,11 @@ const jobPostSchema = new Schema({
         type:String,
         required:true,
     },
-    jobType:{
+    jobStatus:{
         type:String,
         required:true,
     }, 
+    // posted,assigned,started,inprogress,completed
     jobCategory:{
         type:String,
         required:true,
@@ -32,8 +33,20 @@ const jobPostSchema = new Schema({
     },
     Client:{
         type:Schema.Types.ObjectId,
-        ref:"User"
-    }
+        ref:"User",
+        required:true
+    },
+    freelancer : {
+        type:Schema.Types.ObjectId,
+        ref:"User",
+        required:false,
+    },
+    jobProposals:[
+        {
+            type:Schema.Types.ObjectId,
+            ref:"JobBid",
+        }
+    ]
 });
 
 module.exports = mongoose.model("JobPost",jobPostSchema);
