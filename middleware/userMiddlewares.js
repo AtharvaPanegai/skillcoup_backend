@@ -1,9 +1,10 @@
 /** @format */
 
 const User = require("../models/user");
-const BigPromise = require("./bigPromise");
+
 const CustomError = require("../utils/customError");
 const jwt = require("jsonwebtoken");
+const BigPromise = require("./BigPromise");
 
 exports.isLoggedIn = BigPromise(async (req, res, next) => {
   const token =
