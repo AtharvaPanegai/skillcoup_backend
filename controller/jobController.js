@@ -38,6 +38,20 @@ exports.getAllJobs = BigPromise(async (req, res, next) => {
         jobs
     })
 })
+// single job for detail page
+exports.getSingleJobById = BigPromise(async(req,res,next)=>{
+    const {jobId} = req.body;
+    const job = await JobPost.findById(jobId);
+
+    if(!job){
+        return CustomError("Job Not Found",404);
+    }
+
+    res.status(200).json({
+        success:true,
+        job
+    })
+})
 
 // get job Bids by id
 exports.getJobBidsById = BigPromise(async(req,res,next)=>{
