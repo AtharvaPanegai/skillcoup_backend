@@ -52,7 +52,7 @@ exports.signin = BigPromise(async (req, res, next) => {
   }
 
   // finding if the user exits in the database
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({emailId : email}).select("+password")
   if (!user) {
     return next(new CustomError("User Does not exist Please Sign Up", 400));
   }
@@ -166,15 +166,16 @@ exports.passwordReset = BigPromise(async (req, res, next) => {
 
   cookieToken(user, res);
 });
-// pending
+
 exports.getLoggedInUserDetails = BigPromise(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user._id);
 
   res.status(200).json({
     success: true,
     user,
   });
 });
+
 // pending
 exports.changePassword = BigPromise(async (req, res, next) => {
   const userId = req.user.id;
