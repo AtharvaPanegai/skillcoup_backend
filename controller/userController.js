@@ -15,9 +15,9 @@ exports.signup = BigPromise(async (req, res, next) => {
   //   return next(new CustomError("Photo is required for signup", 400));
   // }
 
-  const { firstName,lastName,username,phoneNumber, emailId, password,userType } = req.body;
+  const { firstName, lastName, username, phoneNumber, emailId, password, userType } = req.body;
 
-  if (!emailId || !firstName ||!lastName || !username || !phoneNumber || !password) {
+  if (!emailId || !firstName || !lastName || !username || !phoneNumber || !password) {
     return next(new CustomError("Fields are Missing", 400));
   }
 
@@ -28,7 +28,7 @@ exports.signup = BigPromise(async (req, res, next) => {
   //   crop: "scale",
   // });
 
-  
+
 
   const user = await User.create({
     firstName,
@@ -52,7 +52,7 @@ exports.signin = BigPromise(async (req, res, next) => {
   }
 
   // finding if the user exits in the database
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({emailId : email}).select("+password")
   if (!user) {
     return next(new CustomError("User Does not exist Please Sign Up", 400));
   }
@@ -79,6 +79,20 @@ exports.logout = BigPromise(async (req, res, next) => {
     message: "Logout Success",
   });
 });
+
+exports.getUserById = BigPromise(async (req, res, next) => {
+  const { userIdInput } = req.body;
+  const user = await User.findById(userIdInput);
+
+  if (!user) {
+    return next(new CustomError("No User Found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    user
+  })
+})
 
 // pending
 exports.forgotPassword = BigPromise(async (req, res, next) => {
@@ -152,15 +166,16 @@ exports.passwordReset = BigPromise(async (req, res, next) => {
 
   cookieToken(user, res);
 });
-// pending
+
 exports.getLoggedInUserDetails = BigPromise(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user._id);
 
   res.status(200).json({
     success: true,
     user,
   });
 });
+
 // pending
 exports.changePassword = BigPromise(async (req, res, next) => {
   const userId = req.user.id;
@@ -241,8 +256,8 @@ exports.adminAllUsers = BigPromise(async (req, res, next) => {
 });
 
 exports.admingetSingleUser = BigPromise(async (req, res, next) => {
-  const {username} = req.body;
-  const user = await User.find({username:username});
+  const { username } = req.body;
+  const user = await User.find({ username: username });
 
   if (!user) {
     next(new CustomError("No user Found", 401));
@@ -284,7 +299,7 @@ exports.adminUpdateOneUserDetail = BigPromise(async (req, res, next) => {
 // pending
 exports.adminDeleteSingleUserById = BigPromise(async (req, res, next) => {
   const username = req.body
-  const userImage = await User.find({username:username});
+  const userImage = await User.find({ username: username });
   const imageToBeDeleted = await userImage.photo.id;
 
   const photoRes = await cloudinary.v2.uploader.destroy(imageToBeDeleted);
@@ -299,7 +314,7 @@ exports.adminDeleteSingleUserById = BigPromise(async (req, res, next) => {
 });
 
 exports.adminGetUsersByRole = BigPromise(async (req, res, next) => {
-  const {userType} = req.body;
+  const { userType } = req.body;
   const users = await User.find({ userType: userType });
 
   res.status(200).json({
