@@ -46,7 +46,11 @@ const jobPostSchema = new Schema({
             type:Schema.Types.ObjectId,
             ref:"JobBid",
         }
-    ]
+    ],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+      },
 });
 
 module.exports = mongoose.model("JobPost",jobPostSchema);
