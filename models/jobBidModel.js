@@ -19,7 +19,10 @@ const jobBidSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:"JobPost",
         required:true
-    }    
+    },
+    jobTimeRequired : {
+        
+    }   
 });
 
 module.exports = mongoose.model("JobBid",jobBidSchema);

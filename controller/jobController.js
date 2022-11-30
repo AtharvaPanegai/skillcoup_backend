@@ -7,7 +7,7 @@ exports.postJob = BigPromise(async (req, res, next) => {
  
     const { jobTitle, jobCategory, jobBudget, jobTags, jobDescription, jobFileUrl } = req.body;
 
-    if (!jobTitle || !jobCategory || !jobBudget || !jobTags || !jobDescription || !jobFileUrl) {
+    if (!jobTitle || !jobCategory || !jobBudget || !jobTags || !jobDescription) {
         return next(new CustomError("Fields are missing", 401));
     }
     const jobPosted = await JobPost.create({
