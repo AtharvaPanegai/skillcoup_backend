@@ -31,7 +31,7 @@ exports.postJob = BigPromise(async (req, res, next) => {
 
 // get all jobs for home page
 exports.getAllJobs = BigPromise(async (req, res, next) => {
-    const jobs = await JobPost.find({});
+    const jobs = await JobPost.find({freelancer:{$exists:false}});
 
     res.status(200).json({
         success:true,
