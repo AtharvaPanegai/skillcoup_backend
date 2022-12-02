@@ -1,5 +1,5 @@
 const express = require("express");
-const { assignProjectToFreelancer } = require("../controller/employerController");
+const { assignProjectToFreelancer, getPostedJobs, getAssignedProjects, getCompletedProjects } = require("../controller/employerController");
 const { submitProposalToJob } = require("../controller/freelancerController");
 const { postJob, getAllJobs, getJobBidsById, getSingleJobById } = require("../controller/jobController");
 const { isLoggedIn } = require("../middleware/userMiddlewares");
@@ -12,7 +12,9 @@ router.route("/job/proposals").post(isLoggedIn,getJobBidsById)
 // client routes 
 router.route("/client/postjob").post(isLoggedIn,postJob); // to post a job
 router.route("/client/assignJob").post(isLoggedIn,assignProjectToFreelancer) // assign a job to freelancer
-
+router.route('/client/jobsPosted').get(isLoggedIn,getPostedJobs);
+router.route("/client/assignedJobs").get(isLoggedIn,getAssignedProjects)
+router.route("/client/completedProjects").get(isLoggedIn,getCompletedProjects);
 
 
 router.route("/freelancer/getAllJobs").get(isLoggedIn,getAllJobs)// get all jobs for home page 

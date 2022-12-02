@@ -16,7 +16,34 @@ exports.assignProjectToFreelancer = BigPromise(async (req, res, next) => {
     })
 
     res.status(200).json({
-        success:true,
+        success: true,
         assignedJob
+    })
+})
+
+exports.getPostedJobs = BigPromise(async (req, res, next) => {
+    const jobsPosted = await JobPost.find({ Client: req.user._id });
+
+    res.status(200).json({
+        success: true,
+        jobsPosted
+    })
+})
+
+exports.getAssignedProjects = BigPromise(async (req, res, next) => {
+    const jobs = await JobPost.find({ Client: req.user._id, freelancer: { $exists: true } });
+
+    res.status(200).json({
+        success: true,
+        jobs
+    })
+})
+
+exports.getCompletedProjects = BigPromise(async (req, res, next) => {
+    const jobs = JobPost.find({ Client: req.user._id, jobStatus: "completed" });
+
+    res.status(200).json({
+        success: true,
+        jobs
     })
 })
