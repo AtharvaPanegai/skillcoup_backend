@@ -5,16 +5,17 @@ const BigPromise = require("../middleware/BigPromise")
 const CustomError = require("../utils/customError");
 
 exports.submitProposalToJob = BigPromise(async (req,res,next)=>{
-    const {proposalDescription,proposalQutation,jobId} = req.body;
+    const {proposalDescription,proposalQutation,jobTimeRequired,jobId} = req.body;
 
     const jobBid = await JobBid.create({
         proposalDescription,
         proposalQutation,
         jobId,
+        jobTimeRequired,
         freelancer : req.user._id
     })
 
-    const updatedJobPost = await JobPost.findByIdAndUpdate(jobId,{$push : {jobProposals:jobId}},
+    const updatedJobPost = await JobPost.findByIdAndUpdate(jobId,{$push : {jobProposals:jobBid._id}},
     {safe: true, upsert: true, new : true},
     )
 
