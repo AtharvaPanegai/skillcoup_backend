@@ -40,7 +40,7 @@ exports.getAssignedProjects = BigPromise(async (req, res, next) => {
 })
 
 exports.getCompletedProjects = BigPromise(async (req, res, next) => {
-    const jobs = JobPost.find({ Client: req.user._id, jobStatus: "completed" });
+    const jobs = await JobPost.find({ Client: req.user._id, jobStatus: "completed" });
 
     res.status(200).json({
         success: true,
