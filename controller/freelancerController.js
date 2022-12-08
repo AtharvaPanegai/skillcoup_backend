@@ -26,3 +26,47 @@ exports.submitProposalToJob = BigPromise(async (req,res,next)=>{
     })
 
 })
+
+exports.getAllSubmittedProposals = BigPromise(async(req,res,next)=>{
+    const proposals = await JobBid.find({freelancer:req.user._id});
+
+    if(!proposals){
+        return CustomError("No Proposals Found",404);
+    }
+
+    res.status(200).json({
+        success:true,
+        proposals
+    })
+})
+
+exports.getAcceptedProposals = BigPromise(async(req,res,next)=>{
+    const job = await JobPost.find({freelancer:req.user._id});
+    let proposals = new Array();
+    for(i=0;i< job.length;i++){
+        proposals[i] = JobBid.find({freelancer:req.user._id,jobId:job[i]._id})
+    }
+
+    if(!proposals){
+        return CustomError("No Proposals accepted",500);
+    }
+
+    res.status(200).json({
+        success:true,
+        proposals
+    })
+})
+
+exports.FreelancergetCompletedProjects = BigPromise(async(req,res,next)=>{
+    const jobs = await JobPost.find({freelancer:req.user._id,jobStatus:"completed"});
+
+    if(!jobs){
+        return CustomError("No Jobs Completed",404);
+
+    };
+
+    res.status(200).json({
+        success:true,
+        jobs
+    })
+})

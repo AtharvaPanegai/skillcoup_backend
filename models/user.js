@@ -28,7 +28,7 @@ const userSchema = new Schema({
   emailId: {
     type: String,
     required: true,
-    unique:true
+    unique: true
   },
   password: {
     type: String,
@@ -38,8 +38,10 @@ const userSchema = new Schema({
   },
   skills: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Skill",
+      skillTitle:
+      {
+        type: String,
+      }
     },
   ],
   tagLine: {

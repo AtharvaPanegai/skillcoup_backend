@@ -1,6 +1,6 @@
 const express = require("express");
 const { assignProjectToFreelancer, getPostedJobs, getAssignedProjects, getCompletedProjects } = require("../controller/employerController");
-const { submitProposalToJob } = require("../controller/freelancerController");
+const { submitProposalToJob, getAllSubmittedProposals, getAcceptedProposals, FreelancergetCompletedProjects } = require("../controller/freelancerController");
 const { postJob, getAllJobs, getJobBidsById, getSingleJobById } = require("../controller/jobController");
 const { isLoggedIn } = require("../middleware/userMiddlewares");
 const router = express.Router();
@@ -19,7 +19,9 @@ router.route("/client/completedProjects").get(isLoggedIn,getCompletedProjects);
 
 router.route("/freelancer/getAllJobs").get(isLoggedIn,getAllJobs)// get all jobs for home page 
 router.route("/freelancer/getJobDetailById").post(isLoggedIn,getSingleJobById);
-
+router.route("/freelancer/getAllProposals").get(isLoggedIn,getAllSubmittedProposals);
+router.route("/freelancer/getAcceptedProposals").get(isLoggedIn,getAcceptedProposals);
+router.route("/freelancer/getCompletedJobs").get(isLoggedIn,FreelancergetCompletedProjects)
 
 // freelancer submit proposal
 router.route("/freelancer/submitproposal").post(isLoggedIn,submitProposalToJob);
