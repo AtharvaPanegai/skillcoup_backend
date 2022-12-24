@@ -33,7 +33,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: [true, "Please provide a password"], // first property is required and second is during the error
-    minlength: [2, "Password should be atleast 2 Characters"],
+    minlength: [8, "Password should be atleast 8 Characters"],
     select: false,
   },
   skills: [

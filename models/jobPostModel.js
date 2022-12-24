@@ -47,6 +47,12 @@ const jobPostSchema = new Schema({
             ref:"JobBid",
         }
     ],
+    proposalsSubmittedBy:[
+        {
+            type:Schema.Types.ObjectId,
+            ref:"User"
+        }
+    ],
     createdAt: {
         type: Date,
         default: Date.now,
