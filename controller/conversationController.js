@@ -15,7 +15,7 @@ exports.createConversation = BigPromise(async(req,res,next)=>{
 }) 
 
 exports.getConv = BigPromise(async(req,res,next)=>{
-    const conversations = await Conversation.find({senderId:req.user._id});
+    const conversations = await Conversation.find({$or:[{senderId:req.user._id},{receiverId:req.user._id}]});
 
     res.status(200).json({
         success:true,
