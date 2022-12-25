@@ -24,11 +24,13 @@ app.use(morgan("tiny"));
 const home = require("./routes/home");
 const user = require("./routes/user")
 const jobs = require("./routes/job");
+const message = require("./routes/message");
 
 // router middleware
 app.use("/api/v1",home);
 app.use("/api/v1",user);
 app.use("/api/v1",jobs);
+app.use("/api/v1",message);
 
 
 

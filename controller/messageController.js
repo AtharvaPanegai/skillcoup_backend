@@ -14,9 +14,9 @@ exports.createMessage = BigPromise(async (req, res, next) => {
 
 
 exports.getMessagesofAConv = BigPromise(async (req, res, next) => {
-    const { conversationId } = req.body;
+    const { conversationIdInput } = req.body;
 
-    const messages = Message.find({ conversationId: conversationId });
+    const messages = await Message.find({ conversationId: conversationIdInput });
 
     res.status(200).json({
         success: true,
