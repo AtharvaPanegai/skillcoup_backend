@@ -5,7 +5,7 @@ const { createHmac } = require("crypto");
 require("dotenv").config();
 const BigPromise = require("../middleware/BigPromise");
 const Stripe = require("stripe");
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = Stripe(process.env.STRIPE_SEC_KEY);
 
 exports.createOrder = async (req, res, next) => {
 
