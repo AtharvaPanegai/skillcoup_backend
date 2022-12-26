@@ -33,9 +33,10 @@ app.use("/api/v1",home);
 app.use("/api/v1",user);
 app.use("/api/v1",jobs);
 app.use("/api/v1",message);
-app.use("/api/v1",payment);
+app.use("",payment);
 
-
+// payments
+app.use("/stripe", express.raw({ type: "*/*" }));
 
 // exports
 module.exports = app;

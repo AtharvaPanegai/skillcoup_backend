@@ -4,6 +4,8 @@ const Razorpay = require("razorpay");
 const { createHmac } = require("crypto");
 require("dotenv").config();
 const BigPromise = require("../middleware/BigPromise");
+const Stripe = require("stripe");
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 exports.createOrder = async (req, res, next) => {
 
@@ -58,3 +60,62 @@ exports.verifyPayment = BigPromise(async (req, res, next) => {
         paymentId: razorpayPaymentId,
     });
 });
+
+
+exports.stripeCreatePaymentIntent = async (req, res) => {
+    try {
+      // Getting data from client
+      let { amount,email } = req.body;
+      // Simple validation
+      if (!email || !amount)
+        return res.status(400).json({ message: "Invalid data" });
+      amount = parseInt(amount);
+  
+      // Initiate payment
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount * 100),
+        currency: "INR",
+        payment_method_types: ["card"],
+        metadata: { email, amount },
+      });
+      // Extracting the client secret
+      const clientSecret = paymentIntent.client_secret;
+      // Sending the client secret as response
+      res.json({ message: "Payment initiated", clientSecret });
+    } catch (err) {
+      // Catch any error and send error 500 to client
+      console.error(err);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+
+exports.stripe = async (req, res) => {
+    // Get the signature from the headers
+    const sig = req.headers["stripe-signature"];
+
+    let event;
+
+    try {
+        // Check if the event is sent from Stripe or a third party
+        // And parse the event
+        event = await stripe.webhooks.constructEvent(
+            req.body,
+            sig,
+            process.env.STRIPE_WEBHOOK_SECRET
+        );
+    } catch (err) {
+        // Handle what happens if the event is not from Stripe
+        console.log(err);
+        return res.status(400).json({ message: err.message });
+    }
+    // Event when a payment is initiated
+    if (event.type === "payment_intent.created") {
+        console.log(`${event.data.object.metadata.email} payment initated!`);
+    }
+    // Event when a payment is succeeded
+    if (event.type === "payment_intent.succeeded") {
+        // fulfilment
+        console.log(`${event.data.object.metadata.email} payment succeeded!`);
+    }
+    res.json({ ok: true });
+}

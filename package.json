@@ -34,6 +34,7 @@
     "nodemailer": "^6.7.8",
     "razorpay": "^2.8.4",
     "socket.io": "^4.5.4",
+    "stripe": "^11.5.0",
     "validator": "^13.7.0"
   }
 }
