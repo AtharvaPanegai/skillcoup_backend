@@ -1,19 +1,13 @@
 # REST API for SkillCoup
  - This API is built using NodeJS and ExpressJS and for database MongoDB is used which is a NoSQL (Non Relational Database)
-
-
-## Use Local MongoDB URL to avoid server charges
-
-### Steps to Run NodeJS Sever
-
-Using nodemon as dev dependency for auto refresh
-
-`npm run dev`
-
-*To run Server directly*
-
-`npm start`
-
+ - This API includes functionalities such as Authentication,project Creation,Project updation,user profile updation,conversation,payment etc.
+ 
+## Steps to run in your local env and contribute
+ - Clone the repository
+ - Run the `npm install` to install all dependencies
+ - Create .env file and all the variables along with their values
+ - Run `npm run dev` to run the application in dev mode using Nodemon
+ - Make any changes and create pull request
 
 ## ENV Variables
 
