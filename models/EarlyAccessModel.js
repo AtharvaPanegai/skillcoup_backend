@@ -14,10 +14,13 @@ const earlyAccessSchema = new Schema({
         type: String,
         required: true,
     },
-    userType : {
-        type:String, // client freelancer
-        required:true
+    userType: {
+        type: String, // client freelancer
+        required: true
+    },
+    userRole: {
+        type: String,
     }
 });
 
-module.exports = mongoose.model("EarlyAccessUser",earlyAccessSchema);
+module.exports = mongoose.model("EarlyAccessUser", earlyAccessSchema);
