@@ -3,10 +3,13 @@ var morgan = require("morgan");
 const app = express();
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
-
+const cors = require("cors");
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  origin : "*"
+}))
 
 // cookie middlewares
 app.use(cookieParser());
