@@ -5,11 +5,11 @@ const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
 // middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin : "*"
 }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // cookie middlewares
 app.use(cookieParser());
